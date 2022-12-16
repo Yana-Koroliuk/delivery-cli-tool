@@ -12,7 +12,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String input = scanner.nextLine();
-            String[] inputs = input.split(" ");
+            String[] inputs = input.split(",");
             try {
                 if (Objects.equals(inputs[0], "quit") && inputs.length == 1) {
                     break;
@@ -88,7 +88,7 @@ public class Main {
         List<List<Integer>> adjEdges = adjacencyList.get(vertexFrom);
         for (int i = 0; i < adjEdges.size(); i++) {
             List<Integer> vertexWeights = adjEdges.get(i);
-            if (vertexWeights.contains(vertexTo) && vertexWeights.get(0) == vertexTo) {
+            if (vertexWeights.get(0) == vertexTo) {
                 adjEdges.remove(vertexWeights);
             }
         }
