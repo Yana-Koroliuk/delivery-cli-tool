@@ -3,11 +3,12 @@ import java.util.*;
 
 // todo: rename if possible i and j that is out of loop
 public class Main {
+    public static List<List<List<Integer>>> adjacencyList = new ArrayList<>();
+    private static final List<String> cityList = new ArrayList<>();
     public static void main(String[] args) throws FileNotFoundException {
 //        викликати метод init
-
-        List<List<List<Integer>>> adjacencyList = new ArrayList<>();
-        List<String> cityList = new ArrayList<>();
+        RoadManager roadManager = new RoadManager();
+        roadManager.init();
 
         System.out.println(adjacencyList);
 
@@ -23,7 +24,7 @@ public class Main {
                     String CityFrom = inputs[2];
                     String CityTo = inputs[3];
                     int weight = Integer.parseInt(inputs[4]);
-                    addEdge(adjacencyList, cityList, isOriented, CityFrom, CityTo, weight);
+                    addEdge(isOriented, CityFrom, CityTo, weight);
                     writeInFile(adjacencyList);
                     System.out.println(adjacencyList);
                 } else if (Objects.equals(inputs[0], "delete") && inputs.length == 4) {
@@ -57,7 +58,7 @@ public class Main {
         }
     }
 
-    private static void addEdge(List<List<List<Integer>>> adjacencyList, List<String> cityList, boolean isOriented, String CityFrom, String CityTo, int weight) {
+    public static void addEdge(boolean isOriented, String CityFrom, String CityTo, int weight) {
         if (!cityList.contains(CityFrom)) {
             cityList.add(CityFrom);
         }
