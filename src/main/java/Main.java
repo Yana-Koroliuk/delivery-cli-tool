@@ -1,8 +1,10 @@
+import java.io.*;
 import java.util.*;
 
 // todo: rename if possible i and j that is out of loop
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
+//        викликати метод init
 
         List<List<List<Integer>>> adjacencyList = new ArrayList<>();
         List<String> cityList = new ArrayList<>();
@@ -12,7 +14,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String input = scanner.nextLine();
-            String[] inputs = input.split(",");
+            String[] inputs = input.split(", ");
             try {
                 if (Objects.equals(inputs[0], "quit") && inputs.length == 1) {
                     break;
@@ -22,12 +24,14 @@ public class Main {
                     String CityTo = inputs[3];
                     int weight = Integer.parseInt(inputs[4]);
                     addEdge(adjacencyList, cityList, isOriented, CityFrom, CityTo, weight);
+                    writeInFile(adjacencyList);
                     System.out.println(adjacencyList);
                 } else if (Objects.equals(inputs[0], "delete") && inputs.length == 4) {
                     boolean isOriented = Integer.parseInt(inputs[1]) == 1;
                     String CityFrom = inputs[2];
                     String CityTo = inputs[3];
                     deleteEdge(adjacencyList, isOriented, cityList.indexOf(CityFrom), cityList.indexOf(CityTo));
+                    writeInFile(adjacencyList);
                 } else if (Objects.equals(inputs[0], "calc") && inputs.length == 3) {
                     String CityFrom = inputs[1];
                     String CityTo = inputs[2];
@@ -40,6 +44,16 @@ public class Main {
             catch (Exception e) {
                 System.out.println("Please write again!");
             }
+        }
+    }
+
+    private static void writeInFile(List<List<List<Integer>>> adjacencyList) {
+        File fileOut = new File("/home/koroliuk/IdeaProjects/delivery-cli-tool/src", "output_data.txt");
+        try (OutputStream os  = new FileOutputStream(fileOut, true)) {
+            String text = ((adjacencyList).toString()) + "\n";
+            os.write(text.getBytes());
+        } catch (IOException e) {
+            System.out.println("Wrong data");
         }
     }
 

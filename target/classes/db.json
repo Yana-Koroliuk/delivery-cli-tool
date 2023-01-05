@@ -1,0 +1,24 @@
+{
+  "roads": [
+    {
+      "source": "A",
+      "destination": "B",
+      "length": 12
+    },
+    {
+      "source": "B",
+      "destination": "A",
+      "length": 12
+    },
+    {
+      "source": "B",
+      "destination": "C",
+      "length": 11
+    },
+    {
+      "source": "C",
+      "destination": "B",
+      "length": 11
+    }
+  ]
+}

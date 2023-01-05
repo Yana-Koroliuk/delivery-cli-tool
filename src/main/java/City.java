@@ -1,15 +1,16 @@
 import java.util.List;
 
 public class City {
-    // todo: read about POJO and data class
+    // DONE // todo: read about POJO and data class
     // DONE // todo: add getters and setters
     // DONE // todo: add access modifiers to fields
     // add builder if needed
-    // start using this class in main
+    // todo: start using this class in main
+    // DONE // todo: write graph in file
     private int id;
     private String name;
-    private List<Connection> connections;
-    public City(int id, String name, List<Connection> connections) {
+    private List<Road> connections;
+    public City(int id, String name, List<Road> connections) {
         this.id = id;
         this.name = name;
         this.connections = connections;
@@ -31,11 +32,11 @@ public class City {
         this.name = name;
     }
 
-    public List<Connection> getConnections() {
+    public List<Road> getConnections() {
         return connections;
     }
 
-    public void setConnections(List<Connection> connections) {
+    public void setConnections(List<Road> connections) {
         this.connections = connections;
     }
 }
