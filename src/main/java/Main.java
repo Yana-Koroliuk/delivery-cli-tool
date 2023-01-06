@@ -1,11 +1,12 @@
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import java.io.*;
 import java.util.*;
 
-// todo: rename if possible i and j that is out of loop
 public class Main {
     public static List<List<List<Integer>>> adjacencyList = new ArrayList<>();
-    private static final List<String> cityList = new ArrayList<>();
-    public static void main(String[] args) throws FileNotFoundException {
+    public static final List<String> cityList = new ArrayList<>();
+    public static void main(String[] args) {
 //        викликати метод init
         RoadManager roadManager = new RoadManager();
         roadManager.init();
@@ -32,6 +33,7 @@ public class Main {
                     String CityFrom = inputs[2];
                     String CityTo = inputs[3];
                     deleteEdge(adjacencyList, isOriented, cityList.indexOf(CityFrom), cityList.indexOf(CityTo));
+                    System.out.println(adjacencyList);
                     writeInFile(adjacencyList);
                 } else if (Objects.equals(inputs[0], "calc") && inputs.length == 3) {
                     String CityFrom = inputs[1];
@@ -59,6 +61,9 @@ public class Main {
     }
 
     public static void addEdge(boolean isOriented, String CityFrom, String CityTo, int weight) {
+        if (cityList.contains(CityFrom) && cityList.contains(CityTo)) {
+            deleteEdge(adjacencyList, isOriented, cityList.indexOf(CityFrom), cityList.indexOf(CityTo));
+        }
         if (!cityList.contains(CityFrom)) {
             cityList.add(CityFrom);
         }
@@ -88,15 +93,18 @@ public class Main {
                 }
             }
         }
-
+        RoadManager roadManager = new RoadManager();
+        roadManager.initUpdate();
     }
 
     private static void deleteEdge(List<List<List<Integer>>> adjacencyList, boolean isOriented, int source, int destination) {
         deleteDirection(adjacencyList, source, destination);
+        RoadManager roadManager = new RoadManager();
         if (!isOriented) {
             deleteDirection(adjacencyList, destination, source);
+            roadManager.initUpdate();
         }
-        System.out.println(adjacencyList);
+        roadManager.initUpdate();
     }
 
     private static void deleteDirection(List<List<List<Integer>>> adjacencyList, int vertexFrom, int vertexTo) {

@@ -1,12 +1,6 @@
 import java.util.List;
 
 public class City {
-    // DONE // todo: read about POJO and data class
-    // DONE // todo: add getters and setters
-    // DONE // todo: add access modifiers to fields
-    // add builder if needed
-    // todo: start using this class in main
-    // DONE // todo: write graph in file
     private int id;
     private String name;
     private List<Road> connections;
