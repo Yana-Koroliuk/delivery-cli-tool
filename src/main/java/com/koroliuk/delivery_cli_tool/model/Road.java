@@ -1,3 +1,5 @@
+package com.koroliuk.delivery_cli_tool.model;
+
 public class Road {
     private String source;
     private String destination;

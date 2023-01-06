@@ -1,3 +1,7 @@
+package com.koroliuk.delivery_cli_tool.model;
+
+import com.koroliuk.delivery_cli_tool.model.Road;
+
 import java.util.List;
 
 public class Roads {

@@ -1,1 +1,24 @@
-{"roads":[{"source":"B","destination":"A","length":13333},{"source":"B","destination":"C","length":123},{"source":"A","destination":"B","length":13333},{"source":"C","destination":"B","length":123}]}
+{
+  "roads": [
+    {
+      "source": "B",
+      "destination": "C",
+      "length": 11
+    },
+    {
+      "source": "B",
+      "destination": "A",
+      "length": 33
+    },
+    {
+      "source": "C",
+      "destination": "B",
+      "length": 11
+    },
+    {
+      "source": "A",
+      "destination": "B",
+      "length": 44
+    }
+  ]
+}

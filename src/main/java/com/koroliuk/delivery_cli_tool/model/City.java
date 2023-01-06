@@ -1,3 +1,5 @@
+package com.koroliuk.delivery_cli_tool.model;
+
 import java.util.List;
 
 public class City {
