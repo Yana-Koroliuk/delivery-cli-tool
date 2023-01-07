@@ -1,5 +1,7 @@
 package com.koroliuk.delivery_cli_tool;
 
+import com.koroliuk.delivery_cli_tool.router.DbManager;
+import com.koroliuk.delivery_cli_tool.router.Router;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -14,14 +16,14 @@ public class RouterTest {
     Router router = Mockito.mock(Router.class);
 
     @Test
-    public void dijkstraAlgorithm() {
+    public void findOptimalWayWithDijkstraAlgorithm() {
         DbManager dbManager = new DbManager();
-        dbManager.init();
-        Router router = new Router();
+        Router router = new Router(dbManager);
+        router.loadInitialData(dbManager);
         String source = "A";
         String destination = "C";
-        List<Integer> actual = router.DijkstraAlgorithm(source, destination);
-        List<Integer> expected = Arrays.asList(2, 0, 1, 56);
+        String actual = router.findOptimalWayWithDijkstraAlgorithm(source, destination);
+        String expected = "Shortest path length is: 56\n" + "Path is : [A]-B-[C]" + "\n";
         Assert.assertEquals(expected, actual);
     }
 
@@ -53,10 +55,12 @@ public class RouterTest {
     }
 
     @Test
-    public void printShortestDistance() {
+    public void convertOptimalWayToString() {
+        DbManager dbManager = new DbManager();
+        Router router = new Router(dbManager);
         List<Integer> path = Arrays.asList(2, 0, 1, 56);
-        router.printShortestDistance(path);
-        Mockito.verify(router).printShortestDistance(path);
+        String actual = router.convertOptimalWayToString(path);
+        String expected = "Shortest path length is: 56\n" + "Path is : [A]-B-[C]" + "\n";
+        Assert.assertEquals(expected, actual);
     }
-
 }

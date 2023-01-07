@@ -1,10 +1,13 @@
 package com.koroliuk.delivery_cli_tool;
 
+import com.koroliuk.delivery_cli_tool.router.DbManager;
+import com.koroliuk.delivery_cli_tool.router.Router;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import static org.junit.Assert.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class DbManagerTest {
     @Mock
@@ -12,8 +15,13 @@ public class DbManagerTest {
 
     @Test
     public void update() {
-        dbManager.update();
-        Mockito.verify(dbManager).update();
+        DbManager dbManager1 = new DbManager();
+        Router router = new Router(dbManager1);
+        router.loadInitialData(dbManager1);
+        List<List<List<Integer>>> mockAdjacencyList = router.getAdjacencyList();
+        List<String> mockCityNameList = router.getCityNameList();
+        dbManager.update(mockAdjacencyList, mockCityNameList);
+        Mockito.verify(dbManager).update(mockAdjacencyList, mockCityNameList);
     }
 
     @Test

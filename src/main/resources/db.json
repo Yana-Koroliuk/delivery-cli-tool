@@ -1,1 +1,34 @@
-{"roads":[{"source":"B","destination":"A","length":33},{"source":"B","destination":"C","length":12},{"source":"A","destination":"B","length":44},{"source":"C","destination":"B","length":12},{"source":"C","destination":"D","length":34},{"source":"D","destination":"C","length":34}]}
+{
+  "roads": [
+    {
+      "source": "B",
+      "destination": "A",
+      "length": 33
+    },
+    {
+      "source": "B",
+      "destination": "C",
+      "length": 12
+    },
+    {
+      "source": "A",
+      "destination": "B",
+      "length": 44
+    },
+    {
+      "source": "C",
+      "destination": "B",
+      "length": 12
+    },
+    {
+      "source": "C",
+      "destination": "D",
+      "length": 34
+    },
+    {
+      "source": "D",
+      "destination": "C",
+      "length": 34
+    }
+  ]
+}
