@@ -3,9 +3,13 @@ package com.koroliuk.delivery_cli_tool;
 import java.util.*;
 
 public class App {
+
     public static void main(String[] args) {
         Router router = new Router();
+        DbManager dbManager = new DbManager();
+        dbManager.init();
 
+        System.out.println(Router.adjacencyList);
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String input = scanner.nextLine();
@@ -18,12 +22,14 @@ public class App {
                     String CityFrom = inputs[2];
                     String CityTo = inputs[3];
                     int weight = Integer.parseInt(inputs[4]);
-                    Router.addEdge(isOriented, CityFrom, CityTo, weight);
+                    router.addEdge(isOriented, CityFrom, CityTo, weight);
+                    System.out.println(Router.adjacencyList);
                 } else if (Objects.equals(inputs[0], "delete") && inputs.length == 4) {
                     boolean isOriented = Integer.parseInt(inputs[1]) == 1;
                     String CityFrom = inputs[2];
                     String CityTo = inputs[3];
-                    Router.deleteEdge(isOriented, CityFrom, CityTo);
+                    router.deleteEdge(isOriented, CityFrom, CityTo);
+                    System.out.println(Router.adjacencyList);
                 } else if (Objects.equals(inputs[0], "calc") && inputs.length == 3) {
                     String CityFrom = inputs[1];
                     String CityTo = inputs[2];

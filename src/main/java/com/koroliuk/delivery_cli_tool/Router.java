@@ -60,7 +60,7 @@ public class Router {
         return path;
     }
 
-    public static void addEdge(boolean isOriented, String CityFrom, String CityTo, int length) {
+    public void addEdge(boolean isOriented, String CityFrom, String CityTo, int length) {
         if (cityList.contains(CityFrom) && cityList.contains(CityTo)) {
             deleteEdge(isOriented, CityFrom, CityTo);
         }
@@ -92,7 +92,7 @@ public class Router {
         dbManager.update();
     }
 
-    public static void deleteEdge(boolean isOriented, String source, String destination) {
+    public void deleteEdge(boolean isOriented, String source, String destination) {
         deleteDirection(source, destination);
         if (!isOriented) {
             deleteDirection(destination, source);
@@ -100,7 +100,7 @@ public class Router {
         dbManager.update();
     }
 
-    public static void deleteDirection(String CityFrom, String CityTo) {
+    public void deleteDirection(String CityFrom, String CityTo) {
         int vertexFrom = cityList.indexOf(CityFrom);
         int vertexTo = cityList.indexOf(CityTo);
         List<List<Integer>> adjEdges = adjacencyList.get(vertexFrom);

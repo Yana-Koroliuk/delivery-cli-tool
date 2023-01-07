@@ -9,24 +9,25 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class DbManager {
     private static final String DB_PATH = "/home/koroliuk/IdeaProjects/delivery-cli-tool/src/main/resources/db.json";
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    public DbManager() {
+    /*public DbManager() {
         init();
-    }
+    }*/
 
 
     public void update() {
         Roads roads = new Roads();
         roads.setRoads(new ArrayList<>());
         for(int i = 0; i < Router.adjacencyList.size(); i++) {
-            //List<List<Integer>>  = com.koroliuk.delivery_cli_tool.App.adjacencyList.get(i);
-            for(int j = 0; j < Router.adjacencyList.get(i).size(); j++) {
-                Road road = new Road(Router.cityList.get(i), Router.cityList.get(Router.adjacencyList.get(i).get(j).get(0)), Router.adjacencyList.get(i).get(j).get(1));
+            List<List<Integer>> vertexList = Router.adjacencyList.get(i);
+            for (List<Integer> vertexLength : vertexList) {
+                Road road = new Road(Router.cityList.get(i), Router.cityList.get(vertexLength.get(0)), vertexLength.get(1));
                 roads.getRoads().add(road);
             }
         }
@@ -43,8 +44,9 @@ public class DbManager {
             String content = Files.readString(path);
             Roads roads = mapper.readValue(content, Roads.class);
 
+            Router router = new Router();
             for(Road road : roads.getRoads()) {
-                Router.addEdge(true, road.getSource(), road.getDestination(), road.getLength());
+                router.addEdge(true, road.getSource(), road.getDestination(), road.getLength());
             }
         } catch (IOException e) {
             e.printStackTrace();
