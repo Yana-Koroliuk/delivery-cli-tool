@@ -13,19 +13,25 @@ import java.util.List;
 
 
 public class DbManager {
-    private static final String DB_PATH = "/home/koroliuk/IdeaProjects/delivery-cli-tool/src/main/resources/db.json";
+    private static final String DB_PATH = "src/main/resources/db.json";
     private static final ObjectMapper mapper = new ObjectMapper();
 
     public void update(List<List<List<Integer>>> adjacencyList, List<String> cityNameList) {
-        Roads roads = new Roads();
-        roads.setRoads(new ArrayList<>());
+        List<Road> roadList = new ArrayList<>();
         for (int i = 0; i < adjacencyList.size(); i++) {
-            List<List<Integer>> vertexList = adjacencyList.get(i);
-            for (List<Integer> vertexLength : vertexList) {
-                Road road = new Road(cityNameList.get(i), cityNameList.get(vertexLength.get(0)), vertexLength.get(1));
-                roads.getRoads().add(road);
+            String source = cityNameList.get(i);
+            List<List<Integer>> cityRoads = adjacencyList.get(i);
+            for (List<Integer> roadInfo : cityRoads) {
+                String destination = cityNameList.get(roadInfo.get(0));
+                int length = roadInfo.get(1);
+                Road road = new Road(source, destination, length);
+                roadList.add(road);
             }
         }
+
+        Roads roads = new Roads();
+        roads.setRoads(roadList);
+
         try {
             File file = new File(DB_PATH);
             mapper.writeValue(file, roads);
@@ -34,17 +40,14 @@ public class DbManager {
         }
     }
 
-
-    //todo: може видалити roads і все робити з лістом
     public Roads init() {
         try {
             Path path = Paths.get(DB_PATH);
             String content = Files.readString(path);
             return mapper.readValue(content, Roads.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("No file with initial data provided or it is empty!");
         }
         return null;
-
     }
 }

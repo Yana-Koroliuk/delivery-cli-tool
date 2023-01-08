@@ -19,7 +19,7 @@ public class RouterTest {
     public void findOptimalWayWithDijkstraAlgorithm() {
         DbManager dbManager = new DbManager();
         Router router = new Router(dbManager);
-        router.loadInitialData(dbManager);
+        router.loadInitialData();
         String source = "A";
         String destination = "C";
         String actual = router.findOptimalWayWithDijkstraAlgorithm(source, destination);
@@ -59,7 +59,7 @@ public class RouterTest {
         DbManager dbManager = new DbManager();
         Router router = new Router(dbManager);
         List<Integer> path = Arrays.asList(2, 0, 1, 56);
-        String actual = router.convertOptimalWayToString(path);
+        String actual = router.convertOptimalWayToString(path, 12);
         String expected = "Shortest path length is: 56\n" + "Path is : [A]-B-[C]" + "\n";
         Assert.assertEquals(expected, actual);
     }

@@ -1,5 +1,6 @@
 package com.koroliuk.delivery_cli_tool;
 
+import com.koroliuk.delivery_cli_tool.launcher.Launcher;
 import com.koroliuk.delivery_cli_tool.router.DbManager;
 import com.koroliuk.delivery_cli_tool.router.Router;
 

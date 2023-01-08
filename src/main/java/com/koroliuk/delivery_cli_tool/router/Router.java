@@ -12,28 +12,17 @@ public class Router {
 
     public Router(DbManager dbManager) {
         this.dbManager = dbManager;
-        loadInitialData(dbManager);
-    }
-    public List<List<List<Integer>>> getAdjacencyList() {
-        return adjacencyList;
-    }
-    public void setAdjacencyList(List<List<List<Integer>>> adjacencyList)  {
-        this.adjacencyList = adjacencyList;
+        loadInitialData();
     }
 
-    public List<String> getCityNameList() {
-        return cityNameList;
-    }
-    public void setCityNameList(List<String> cityNameList) {
-        this.cityNameList = cityNameList;
-    }
-
-    public void loadInitialData(DbManager dbManager) {
+    public void loadInitialData() {
         Roads roads = dbManager.init();
-        List<Road> roadList = roads.getRoads();
-        if (roadList != null) {
-            for (Road road : roadList) {
-                addEdgeToAdjList(true, road.getSource(), road.getDestination(), road.getLength());
+        if (roads != null) {
+            List<Road> roadList = roads.getRoads();
+            if (roadList != null) {
+                for (Road road : roadList) {
+                    addEdgeToAdjList(true, road.getSource(), road.getDestination(), road.getLength());
+                }
             }
         }
     }
@@ -74,18 +63,17 @@ public class Router {
                 }
             }
         }
-        List<Integer> path = new ArrayList<>();
+        List<Integer> way = new ArrayList<>();
         for (int v = idDestination; v != idSource; v = predecessor.get(v)) {
             if (v != -1) {
-                path.add(v);
+                way.add(v);
             } else {
                 break;
             }
         }
-        path.add(idSource);
-        int pathLength = distance.get(idDestination);
-        path.add(pathLength);
-        return convertOptimalWayToString(path);
+        way.add(idSource);
+        int wayLength = distance.get(idDestination);
+        return convertOptimalWayToString(way, wayLength);
     }
 
     private void addEdgeToAdjList(boolean isOriented, String CityFrom, String CityTo, int length) {
@@ -144,19 +132,49 @@ public class Router {
         }
     }
 
-    public String convertOptimalWayToString(List<Integer> path) {
-        String result = "";
-        if ((path.get(path.size() - 1) != Integer.MAX_VALUE)) {
-            result += "Shortest path length is: " + path.get(path.size() - 1) + "\n";
-            result += "Path is : [" + cityNameList.get(path.get(path.size() - 2)) + "]-";
-            for (int i = path.size() - 3; i >= 1; i--) {
-                result += cityNameList.get(path.get(i)) + "-";
+    public String convertOptimalWayToString(List<Integer> way, int wayLength) {
+        StringBuilder result = new StringBuilder();
+        String sourceCityName = cityNameList.get(way.get(way.size() - 1));
+        if (wayLength != Integer.MAX_VALUE) {
+            result.append("Shortest path length is: ")
+                    .append(wayLength)
+                    .append("\n")
+                    .append("Path is : [")
+                    .append(sourceCityName)
+                    .append("]-");
+
+            for (int i = way.size() - 2; i >= 1; i--) {
+                String cityName = cityNameList.get(way.get(i));
+                result.append(cityName)
+                        .append("-");
             }
-            result += "[" + cityNameList.get(path.get(0)) + "]" + "\n";
-            return result;
+
+            String destinationCityName = cityNameList.get(way.get(0));
+            result.append("[")
+                    .append(destinationCityName)
+                    .append("]")
+                    .append("\n");
+
+            return result.toString();
         } else {
             return "Given source and destination are not connected";
         }
+    }
+
+    public List<List<List<Integer>>> getAdjacencyList() {
+        return adjacencyList;
+    }
+
+    public void setAdjacencyList(List<List<List<Integer>>> adjacencyList) {
+        this.adjacencyList = adjacencyList;
+    }
+
+    public List<String> getCityNameList() {
+        return cityNameList;
+    }
+
+    public void setCityNameList(List<String> cityNameList) {
+        this.cityNameList = cityNameList;
     }
 
 }

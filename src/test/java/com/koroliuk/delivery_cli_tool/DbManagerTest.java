@@ -17,7 +17,7 @@ public class DbManagerTest {
     public void update() {
         DbManager dbManager1 = new DbManager();
         Router router = new Router(dbManager1);
-        router.loadInitialData(dbManager1);
+        router.loadInitialData();
         List<List<List<Integer>>> mockAdjacencyList = router.getAdjacencyList();
         List<String> mockCityNameList = router.getCityNameList();
         dbManager.update(mockAdjacencyList, mockCityNameList);
