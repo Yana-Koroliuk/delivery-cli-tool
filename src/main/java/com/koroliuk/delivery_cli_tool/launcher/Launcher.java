@@ -26,12 +26,12 @@ public class Launcher {
                     String cityFrom = inputs[2];
                     String cityTo = inputs[3];
                     int length = Integer.parseInt(inputs[4]);
-                    router.addEdge(isOriented, cityFrom, cityTo, length);
+                    router.addRoad(isOriented, cityFrom, cityTo, length);
                 } else if ("delete".equals(command) && inputs.length == 4) {
                     boolean isOriented = "1".equals(inputs[1]);
                     String cityFrom = inputs[2];
                     String cityTo = inputs[3];
-                    router.deleteEdge(isOriented, cityFrom, cityTo);
+                    router.deleteRoad(isOriented, cityFrom, cityTo);
                 } else if ("calc".equals(command) && inputs.length == 3) {
                     String cityFrom = inputs[1];
                     String cityTo = inputs[2];

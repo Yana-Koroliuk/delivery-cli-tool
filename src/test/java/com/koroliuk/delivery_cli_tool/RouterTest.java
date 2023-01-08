@@ -33,8 +33,8 @@ public class RouterTest {
         String CityFrom = "A";
         String CityTo = "B";
         int length = 12;
-        router.addEdge(isOriented, CityFrom, CityTo, length);
-        Mockito.verify(router).addEdge(isOriented, CityFrom, CityTo, length);
+        router.addRoad(isOriented, CityFrom, CityTo, length);
+        Mockito.verify(router).addRoad(isOriented, CityFrom, CityTo, length);
     }
 
     @Test
@@ -42,8 +42,8 @@ public class RouterTest {
         boolean isOriented = true;
         String source = "A";
         String destination = "B";
-        router.deleteEdge(isOriented, source, destination);
-        Mockito.verify(router).deleteEdge(isOriented, source, destination);
+        router.deleteRoad(isOriented, source, destination);
+        Mockito.verify(router).deleteRoad(isOriented, source, destination);
     }
 
     @Test
