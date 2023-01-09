@@ -36,7 +36,7 @@ public class Launcher {
                     String cityFrom = inputs[1];
                     String cityTo = inputs[2];
                     String optimalWay = router.findOptimalWayWithDijkstraAlgorithm(cityFrom, cityTo);
-                    System.out.println(optimalWay);
+                    System.out.print(optimalWay);
                 } else {
                     System.out.println("Please write again!");
                 }

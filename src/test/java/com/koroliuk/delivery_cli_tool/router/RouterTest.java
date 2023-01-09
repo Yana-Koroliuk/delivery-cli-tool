@@ -45,13 +45,13 @@ public class RouterTest {
         DbManager dbManager = new DbManager();
         Router router = new Router(dbManager);
         int wayLength = 12;
-        List<Integer> path = Arrays.asList(2, 0, 1);
+        List<Integer> way = Arrays.asList(2, 0, 1);
         String expected = """
                 Shortest path length is: 12
                 Path is : [A]-B-[C]
                 """;
 
-        String actual = router.convertOptimalWayToString(path, wayLength);
+        String actual = router.convertOptimalWayToString(way, wayLength);
 
         Assert.assertEquals(expected, actual);
     }

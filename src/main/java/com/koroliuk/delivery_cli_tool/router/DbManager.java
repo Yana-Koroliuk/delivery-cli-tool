@@ -19,12 +19,12 @@ public class DbManager {
     public void update(List<List<List<Integer>>> adjacencyList, List<String> cityNameList) {
         List<Road> roadList = new ArrayList<>();
         for (int i = 0; i < adjacencyList.size(); i++) {
-            String source = cityNameList.get(i);
+            String cityFrom = cityNameList.get(i);
             List<List<Integer>> cityRoads = adjacencyList.get(i);
             for (List<Integer> roadInfo : cityRoads) {
-                String destination = cityNameList.get(roadInfo.get(0));
+                String cityTo = cityNameList.get(roadInfo.get(0));
                 int length = roadInfo.get(1);
-                Road road = new Road(source, destination, length);
+                Road road = new Road(cityFrom, cityTo, length);
                 roadList.add(road);
             }
         }

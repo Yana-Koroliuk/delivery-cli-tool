@@ -43,31 +43,32 @@ public class Router {
 
         distance.set(idSource, 0);
         for (int i = 0; i < cityAmount; ++i) {
-            int v = -1;
+            int cityId = -1;
             for (int j = 0; j < cityAmount; ++j) {
-                if (!visited.get(j) && (v == -1 || distance.get(j) < distance.get(v))) {
-                    v = j;
+                if (!visited.get(j) && (cityId == -1 || distance.get(j) < distance.get(cityId))) {
+                    cityId = j;
                 }
             }
-            if (distance.get(v) == Integer.MAX_VALUE || v == idDestination) {
+            if (distance.get(cityId) == Integer.MAX_VALUE || cityId == idDestination) {
                 break;
             }
-            visited.set(v, true);
-            List<List<Integer>> cityRoads = adjacencyList.get(v);
-            for (List<Integer> vertexInfo : cityRoads) {
-                int to = vertexInfo.get(0);
-                int len = vertexInfo.get(1);
-                if (distance.get(v) + len < distance.get(to)) {
-                    distance.set(to, distance.get(v) + len);
-                    predecessor.set(to, v);
+            visited.set(cityId, true);
+            List<List<Integer>> cityRoads = adjacencyList.get(cityId);
+            for (List<Integer> roadInfo : cityRoads) {
+                int cityToId = roadInfo.get(0);
+                int length = roadInfo.get(1);
+                int distanceBetweenCity = distance.get(cityId) + length;
+                if (distanceBetweenCity < distance.get(cityToId)) {
+                    distance.set(cityToId, distanceBetweenCity);
+                    predecessor.set(cityToId, cityId);
                 }
             }
         }
 
         List<Integer> way = new ArrayList<>();
-        for (int v = idDestination; v != idSource; v = predecessor.get(v)) {
-            if (v != -1) {
-                way.add(v);
+        for (int cityId = idDestination; cityId != idSource; cityId = predecessor.get(cityId)) {
+            if (cityId != -1) {
+                way.add(cityId);
             } else {
                 break;
             }
@@ -78,50 +79,53 @@ public class Router {
         return convertOptimalWayToString(way, wayLength);
     }
 
-    public void addRoad(boolean isOriented, String CityFrom, String CityTo, int length) {
-        addRoadToAdjList(isOriented, CityFrom, CityTo, length);
+    public void addRoad(boolean isOriented, String cityFrom, String cityTo, int length) {
+        addRoadToAdjList(isOriented, cityFrom, cityTo, length);
         dbManager.update(adjacencyList, cityNameList);
     }
 
-    public void deleteRoad(boolean isOriented, String source, String destination) {
-        deleteRoadFromAdjList(isOriented, source, destination);
+    public void deleteRoad(boolean isOriented, String cityFrom, String cityTo) {
+        deleteRoadFromAdjList(isOriented, cityFrom, cityTo);
         dbManager.update(adjacencyList, cityNameList);
     }
 
-    private void addRoadToAdjList(boolean isOriented, String CityFrom, String CityTo, int length) {
-        if (cityNameList.contains(CityFrom) && cityNameList.contains(CityTo)) {
-            deleteRoadFromAdjList(isOriented, CityFrom, CityTo);
+    private void addRoadToAdjList(boolean isOriented, String cityFrom, String cityTo, int length) {
+        if (cityNameList.contains(cityFrom) && cityNameList.contains(cityTo)) {
+            deleteRoadFromAdjList(isOriented, cityFrom, cityTo);
         }
-        if (!cityNameList.contains(CityFrom)) {
-            cityNameList.add(CityFrom);
+        if (!cityNameList.contains(cityFrom)) {
+            cityNameList.add(cityFrom);
         }
-        if (!cityNameList.contains(CityTo)) {
-            cityNameList.add(CityTo);
+        if (!cityNameList.contains(cityTo)) {
+            cityNameList.add(cityTo);
         }
-        int vertexFromId = cityNameList.indexOf(CityFrom);
-        int vertexToId = cityNameList.indexOf(CityTo);
+        int cityFromId = cityNameList.indexOf(cityFrom);
+        int cityToId = cityNameList.indexOf(cityTo);
         int cityAmount = adjacencyList.size();
-        int maxVertexId = Math.max(vertexFromId, vertexToId);
-        if (maxVertexId > cityAmount - 1) {
-            for (int n = cityAmount; n <= maxVertexId; n++) {
+        int maxCityId = Math.max(cityFromId, cityToId);
+        if (maxCityId > cityAmount - 1) {
+            for (int n = cityAmount; n <= maxCityId; n++) {
                 adjacencyList.add(new ArrayList<>());
             }
         }
         List<Integer> roadInfo = new ArrayList<>();
-        roadInfo.add(vertexToId);
+        roadInfo.add(cityToId);
         roadInfo.add(length);
-        List<List<Integer>> cityRoads = adjacencyList.get(vertexFromId);
-        cityRoads.add(roadInfo);
+        List<List<Integer>> cityFromRoads = adjacencyList.get(cityFromId);
+        cityFromRoads.add(roadInfo);
         if (!isOriented) {
-            List<Integer> secondDirectionRoadInfo = new ArrayList<>(roadInfo);
-            cityRoads.add(secondDirectionRoadInfo);
+            List<Integer> secondDirectionRoadInfo = new ArrayList<>();
+            secondDirectionRoadInfo.add(cityFromId);
+            secondDirectionRoadInfo.add(length);
+            List<List<Integer>> cityToRoads = adjacencyList.get(cityToId);
+            cityToRoads.add(secondDirectionRoadInfo);
         }
     }
 
-    private void deleteRoadFromAdjList(boolean isOriented, String source, String destination) {
-        deleteDirection(source, destination);
+    private void deleteRoadFromAdjList(boolean isOriented, String cityFrom, String cityTo) {
+        deleteDirection(cityFrom, cityTo);
         if (!isOriented) {
-            deleteDirection(destination, source);
+            deleteDirection(cityTo, cityFrom);
         }
     }
 
