@@ -13,7 +13,7 @@ The program works as an interactive form. It allows users to find the most optim
 * delete - to delete the path between objects
 * quit - to exit
 
-All code has been verified by SonarLint. All dependencies are listed in pom.xml flie.
+All code has been verified by SonarLint. All dependencies are listed in **pom.xml** flie.
 
 ## Technological stack
 * Java
