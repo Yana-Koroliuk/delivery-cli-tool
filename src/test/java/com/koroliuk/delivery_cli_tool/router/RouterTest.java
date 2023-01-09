@@ -35,8 +35,7 @@ public class RouterTest {
         String actual = router.findOptimalWayWithDijkstraAlgorithm(source, destination);
         String expected = """
                 Shortest path length is: 20
-                Path is : [A]-[C]
-                """;
+                Path is : [A]-[C]""";
         Assert.assertEquals(expected, actual);
     }
 
@@ -48,8 +47,7 @@ public class RouterTest {
         List<Integer> way = Arrays.asList(2, 0, 1);
         String expected = """
                 Shortest path length is: 12
-                Path is : [A]-B-[C]
-                """;
+                Path is : [A]-B-[C]""";
 
         String actual = router.convertOptimalWayToString(way, wayLength);
 

@@ -162,8 +162,7 @@ public class Router {
             String destinationCityName = cityNameList.get(way.get(0));
             result.append("[")
                     .append(destinationCityName)
-                    .append("]")
-                    .append("\n");
+                    .append("]");
 
             return result.toString();
         } else {
