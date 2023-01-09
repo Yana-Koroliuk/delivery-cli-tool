@@ -6,8 +6,8 @@ import com.koroliuk.delivery_cli_tool.model.Roads;
 import java.util.*;
 
 public class Router {
-    public List<List<List<Integer>>> adjacencyList = new ArrayList<>();
-    public List<String> cityNameList = new ArrayList<>();
+    private List<List<List<Integer>>> adjacencyList = new ArrayList<>();
+    private List<String> cityNameList = new ArrayList<>();
     private final DbManager dbManager;
 
     public Router(DbManager dbManager) {
