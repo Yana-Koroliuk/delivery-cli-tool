@@ -26,20 +26,23 @@ public class Router {
             }
         }
     }
+    private static final List<Integer> predecessor = new ArrayList<>();
+    private static final List<Integer> distance = new ArrayList<>();
+    private static final List<Boolean> visited = new ArrayList<>();
 
-    public String findOptimalWayWithDijkstraAlgorithm(String source, String destination) {
-        int idSource = cityNameList.indexOf(source);
-        int idDestination = cityNameList.indexOf(destination);
-        int cityAmount = adjacencyList.size();
-        List<Integer> predecessor = new ArrayList<>();
-        List<Integer> distance = new ArrayList<>();
-        List<Boolean> visited = new ArrayList<>();
-
+    public void prepareList(int cityAmount) {
         for (int i = 0; i < cityAmount; i++) {
             visited.add(false);
             distance.add(Integer.MAX_VALUE);
             predecessor.add(-1);
         }
+    }
+
+    public String findOptimalWayWithDijkstraAlgorithm(String source, String destination) {
+        int idSource = cityNameList.indexOf(source);
+        int idDestination = cityNameList.indexOf(destination);
+        int cityAmount = adjacencyList.size();
+        prepareList(cityAmount);
 
         distance.set(idSource, 0);
         for (int i = 0; i < cityAmount; ++i) {
@@ -67,11 +70,8 @@ public class Router {
 
         List<Integer> way = new ArrayList<>();
         for (int cityId = idDestination; cityId != idSource; cityId = predecessor.get(cityId)) {
-            if (cityId != -1) {
-                way.add(cityId);
-            } else {
-                break;
-            }
+            if (cityId == -1) break;
+            way.add(cityId);
         }
         way.add(idSource);
 
