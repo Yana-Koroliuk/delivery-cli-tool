@@ -26,6 +26,10 @@ public class Launcher {
                     String cityFrom = inputs[2];
                     String cityTo = inputs[3];
                     int length = Integer.parseInt(inputs[4]);
+                    if (length <= 0) {
+                        System.out.println("Please length need to be positive number");
+                        continue;
+                    }
                     router.addRoad(isOriented, cityFrom, cityTo, length);
                 } else if ("delete".equals(command) && inputs.length == 4) {
                     boolean isOriented = "1".equals(inputs[1]);
