@@ -26,6 +26,7 @@ public class Router {
             }
         }
     }
+
     private static final List<Integer> predecessor = new ArrayList<>();
     private static final List<Integer> distance = new ArrayList<>();
     private static final List<Boolean> visited = new ArrayList<>();
